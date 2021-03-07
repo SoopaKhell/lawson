@@ -1,0 +1,6 @@
+*.md
+Day*
+__pycache__
+*.pptx
+*.pdf
+token

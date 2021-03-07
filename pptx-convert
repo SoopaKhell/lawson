@@ -1,0 +1,19 @@
+#!/bin/bash
+
+cd $HOME/HOA/
+
+echo -n "This will overwrite HOA_bullets.md. Are you sure? (y/N) "
+read y
+
+if [ -f "HOA.pptx" ] ; then
+	if [ "$y" = "y" ]; then
+		libreoffice --headless --convert-to pdf HOA.pptx
+		# | tr -s ' ' |
+		python conv.py | sed -z 's/\n/ /g' | sed 's/•/\n*/g' | sed 's//\n\t* /g' | sed 's//\n\t\t* /g' | sed 's/  / /g' | sed 's//\n\n---\n\n/g' | sed 's/“/\"/g' | sed 's/”/\"/g' | sed "s/’/'/g" | sed 's/*/* /g' | sed -z 's/---\n\n\n\n---/---/g' | tee HOA.md HOA_bullets.md > /dev/null
+		rm HOA.pdf
+	else
+		echo "Canceled."
+	fi
+else
+	echo "HOA.pptx not found. Copy it over and rename it."
+fi

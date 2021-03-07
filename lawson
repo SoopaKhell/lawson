@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd $HOME/.local/src/HOA/
+python lawson2.py "$@"

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd $HOME/HOA/
+cd $HOME/.local/src/HOA/
 
 echo -n "This will overwrite HOA_bullets.md. Are you sure? (y/N) "
 read y

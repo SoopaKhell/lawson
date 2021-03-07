@@ -73,6 +73,8 @@ for i, arg in enumerate(argv):
         dayNum = argv[i+1]
         break
 
+latestItem = None
+
 if dayNum == None:
     latestItem = moduleItems[-1]
 else:
@@ -81,12 +83,16 @@ else:
             latestItem = item
             break
 
+if latestItem == None:
+    print("could not find latest item.")
+    exit()
+
 latestAssignmentURL = latestItem["url"]
 latestAssignment = requests.get(latestAssignmentURL+"?"+token).json()
 
 try:
-    title = latestAssignment["name"].replace("--", "—")
-    desc = latestAssignment["description"].replace("--", "—")
+    title = latestAssignment["name"].replace("--", "—").replace("&nbsp;", "")
+    desc = latestAssignment["description"].replace("--", "—").replace("&nbsp;", "")
 except:
     print("failed on:", latestAssignment["url"])
     exit()
@@ -256,7 +262,7 @@ if apps == []: # no assignment / study guide
     fileString += "\n\n"+desc[0]
 else:
     write(fileName, fileString) # final output
-    os.system("aspell -c /home/carter/HOA/"+fileName)
+    os.system("aspell -c $HOME/.local/src/HOA/"+fileName)
 
 #if "s" in args:
 #    os.system("clear")

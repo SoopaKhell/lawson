@@ -4,3 +4,4 @@ __pycache__
 *.pptx
 *.pdf
 token
+.canvastoken

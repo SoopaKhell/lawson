@@ -155,7 +155,7 @@ def get_slide(page, summarize=True):
         
         slideText = re.sub("(?i)no one( |\.|$)", "nobody ", slideText)
 
-        slideText = re.sub(" \((.+?)\)", "", slideText)
+        #slideText = re.sub(" \((.+?)\)", "", slideText)
         
         slideText = slideText.replace(" assisted ", " helped ")
         slideText = slideText.replace(" assist in ", " help ")
@@ -318,6 +318,18 @@ def get_slide(page, summarize=True):
 
     slideText = slideText.replace("*", "* ")
     slideText = slideText.replace("  ", " ")
+
+    lines = slideText.split("\n")
+    newLines = []
+
+    for line in lines:
+        if not line.startswith("#"):
+            newLine = re.sub(" \((.+?)\)", "", line)
+            newLines.append(newLine)
+        else:
+            newLines.append(line)
+
+    slideText = '\n'.join(newLines)
 
     return slideText.strip("\n")
 

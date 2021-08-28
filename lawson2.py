@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # lawson2.py
 # script I do work HOA through
 # takes slide info from slides.py, gets assignments from canvas API
@@ -54,7 +56,7 @@ token = ""
 with open("token") as f:
     token = "access_token="+f.read().strip()
 
-modulesURL = "https://hallco.instructure.com/api/v1/courses/61222/modules?"+token
+modulesURL = "https://hallco.instructure.com/api/v1/courses/71424/modules?"+token
 modules = reversed(requests.get(modulesURL).json())
 
 moduleID = ""
@@ -63,7 +65,7 @@ for module in modules:
         moduleID = str(module["id"])
         break
 
-itemsURL = "https://hallco.instructure.com/api/v1/courses/61222/modules/"+moduleID+"/items?per_page=400&"+token
+itemsURL = "https://hallco.instructure.com/api/v1/courses/71424/modules/"+moduleID+"/items?per_page=400&"+token
 
 moduleItems = requests.get(itemsURL).json()
 
@@ -137,14 +139,14 @@ The **4** most important facts:
 The **2** most important facts of those:
 
 
-* This fact is important because 
+    * This fact is important because 
 
-* This fact is important because 
+    * This fact is important because 
 
 **The** most important fact:
 
 
-* This fact is the most important because """
+    * This fact is the most important because """
     elif appNum == 7:
         fileString += "\n"+get_slide(app[0], True)+"""
 
@@ -168,6 +170,13 @@ The **2** most important facts of those:
 |  |  |
 |  |  |
 |  |  |
+"""
+    elif appNum == 10:
+        fileString += get_slide(app[0], True)
+        fileString += """
+
+* 
+    * This fact is the least important because 
 """
     elif appNum == 12:
         if "p" in args:
@@ -197,7 +206,8 @@ The **2** most important facts of those:
         if "s" in args:
             lines = get_slide(app[0], True)
             os.system("clear")
-            print(textwrap.fill(lines, width=75))
+            lines = lines.replace("\n", "NEWLINELOL")
+            print(textwrap.fill(lines, width=75).replace("NEWLINELOL","\n"))
             pyperclip.copy(lines)
             fileString += input("""SINGLE SENTENCE summary:
 
